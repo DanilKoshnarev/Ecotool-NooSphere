@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Еко Порадник</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c5e1e;
+            --gradient-text: linear-gradient(45deg, #2c5e1e, #4CAF50);
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: var(--gradient-text);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .eco-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .input-section, .output-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .input-section:hover, .output-section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .eco-form textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            background: var(--gradient-text);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .submit-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+        
+        .faq-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding: 1rem;
+            cursor: pointer;
+        }
+        
+        .faq-question {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://img.icons8.com/color/96/000000/earth-planet.png" alt="Eco" class="eco-icon">
+        <h1>Еко Порадник</h1>
+    </div>
+    
+    <div class="container">
+        <div class="eco-sections">
+            <div class="input-section">
+                <h2>Задайте ваше питання</h2>
+                <form method="POST" class="eco-form">
+                    <textarea name="user_input" placeholder="Яке екологічне питання вас цікавить?"></textarea>
+                    <button type="submit" class="submit-button">Отримати пораду</button>
+                </form>
+            </div>
+            
+            <div class="output-section">
+                <h2>Еко-порада</h2>
+                {% if advice %}
+                <div class="advice">
+                    <p>{{ advice }}</p>
+                    {% if metadata %}
+                    <div class="metadata">
+                        <p>Складність: {{ metadata.implementation_difficulty }}</p>
+                        <p>Потенційна економія: {{ metadata.estimated_resource_savings }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <p>Задайте питання, щоб отримати екологічну пораду!</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="faq-section">
+            <h2>Часті запитання</h2>
+            <div class="faq-item">
+                <div class="faq-question">Як зменшити споживання електроенергії?</div>
+                <div class="faq-answer">
+                    <p>Використовуйте LED-лампи, вимикайте прилади з режиму очікування, встановіть розумні термостати.</p>
+                </div>
+            </div>
+            <!-- Add more FAQ items -->
+        </div>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
